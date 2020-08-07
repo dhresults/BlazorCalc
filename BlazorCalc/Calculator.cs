@@ -150,14 +150,26 @@ namespace BlazorCalc
         public string calculateEquation()
         {
             DataTable dt = new DataTable();
-            var v = dt.Compute(Equation, "");
-            string answer = v.ToString();
-            Result result = new Result(Equation, answer);
-            Results.Add(result);
-            HistoryIndex += 1;
-            UpdateStepperControls();
-            Answer = String.Format("{0} = {1}", Equation, answer);
-            return Answer;
+            try
+            {
+                var v = dt.Compute(Equation, "");
+                string answer = v.ToString();
+                Result result = new Result(Equation, answer);
+                Results.Add(result);
+                HistoryIndex += 1;
+                UpdateStepperControls();
+                Answer = String.Format("{0} = {1}", Equation, answer);
+                return Answer;
+            }
+            catch (Exception e)
+            {
+                Result result = new Result(Equation, "Invalid equation");
+                Results.Add(result);
+                HistoryIndex += 1;
+                UpdateStepperControls();
+                Answer = String.Format("{0} = {1}", Equation, "Invalid equation");
+                return e.ToString();
+            }
         }
 
         public string calculate()
