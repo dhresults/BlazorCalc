@@ -1,0 +1,34 @@
+﻿@page "/calculator2"
+
+<h1>Calculator2</h1>
+
+<h3>Result[@calculator.HistoryIndex]: @calculator.Answer</h3>
+<div class="btn-group" role="group" aria-label="First group">
+    <button id="backward" @onclick="@calculator.StepBack" class="btn btn-secondary oi oi-media-step-backward @(calculator.canStepBack ? "" : "disabled")"></button>
+    <button id="forward" @onclick="@calculator.StepForward" class="btn mr-2 btn-secondary oi oi-media-step-forward @(calculator.canStepForward ? "" : "disabled")"></button>
+</div>
+<div class="btn-group" role="group" aria-label="Second group">
+    <button id="trash" @onclick="@calculator.ClearHistory" class="btn btn-danger oi oi-trash @(calculator.canClearHistory ? "" : "disabled")"></button>
+</div>
+<br /><br />
+
+<h3>Equation</h3>
+<div class="form-group">
+    <EditForm Model="@calculator" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="input-group mb-3">
+            <InputText class="form-control" placeholder="<numx><op1><numx2><op2><numx3>...<numxn><opn><numn+1>" aria-label="Mathematical equation" id="left" @bind-Value="@calculator.Equation" />
+        </div>
+        <button class="btn btn-primary" type="submit">Calculate!</button>
+    </EditForm>
+</div>
+
+@code {
+    BlazorCalc.Calculator calculator = new BlazorCalc.Calculator();
+
+    private void HandleValidSubmit()
+    {
+        calculator.calculateEquation();
+    }
+}

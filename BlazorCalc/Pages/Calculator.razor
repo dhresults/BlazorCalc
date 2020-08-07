@@ -1,0 +1,53 @@
+﻿@page "/calculator"
+
+<h1>Calculator</h1>
+
+<h3>Result[@calculator.HistoryIndex]: @calculator.Answer</h3>
+<div class="btn-group" role="group" aria-label="First group">
+    <button id="backward" @onclick="@calculator.StepBack" class="btn btn-secondary oi oi-media-step-backward @(calculator.canStepBack ? "" : "disabled")"></button>
+    <button id="forward" @onclick="@calculator.StepForward" class="btn mr-2 btn-secondary oi oi-media-step-forward @(calculator.canStepForward ? "" : "disabled")"></button>
+</div>
+<div class="btn-group" role="group" aria-label="Second group">
+    <button id="trash" @onclick="@calculator.ClearHistory" class="btn btn-danger oi oi-trash @(calculator.canClearHistory ? "" : "disabled")"></button>
+</div>
+<br /><br />
+
+<h3>Equation</h3>
+<div class="form-group">
+    <EditForm EditContext="@editContext" Model="@calculator" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="input-group mb-3">
+            <InputNumber class="form-control" placeholder="0" id="left" @bind-Value="calculator.Left" />
+            <InputNumber class="form-control" placeholder="0" id="right" @bind-Value="calculator.Right" />
+            <InputSelect class="form-control" @bind-Value="calculator.Operator">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+            </InputSelect>
+        </div>
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+                <button class="btn btn-primary @(formInvalid ? "disabled" : "")" type="submit">Calculate!</button>
+            </div>
+        </div>
+
+    </EditForm>
+</div>
+
+@code {
+    BlazorCalc.Calculator calculator = new BlazorCalc.Calculator();
+    private bool formInvalid = false;
+    private EditContext editContext;
+
+    private void HandleValidSubmit()
+    {
+        calculator.calculate();
+    }
+    private void HandleFieldChanged(object sender, FieldChangedEventArgs e)
+    {
+        formInvalid = !editContext.Validate();
+        StateHasChanged();
+    }
+}

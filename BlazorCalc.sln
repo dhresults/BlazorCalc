@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorCalc", "BlazorCalc\BlazorCalc.csproj", "{8AE0FEA6-B032-4238-B141-999C747FC8A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorCalcTest", "BlazorCalcTest\BlazorCalcTest.csproj", "{15D87D06-195B-4E9A-9CB5-45B0B8D2151D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8AE0FEA6-B032-4238-B141-999C747FC8A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AE0FEA6-B032-4238-B141-999C747FC8A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AE0FEA6-B032-4238-B141-999C747FC8A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AE0FEA6-B032-4238-B141-999C747FC8A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15D87D06-195B-4E9A-9CB5-45B0B8D2151D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15D87D06-195B-4E9A-9CB5-45B0B8D2151D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15D87D06-195B-4E9A-9CB5-45B0B8D2151D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15D87D06-195B-4E9A-9CB5-45B0B8D2151D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
