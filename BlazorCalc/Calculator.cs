@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data;
 using System.Collections.Generic;
+using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
 
 namespace BlazorCalc
 {
@@ -149,11 +151,9 @@ namespace BlazorCalc
 
         public string calculateEquation()
         {
-            DataTable dt = new DataTable();
             try
             {
-                var v = dt.Compute(Equation, "");
-                string answer = v.ToString();
+                var answer = evaluate(Equation);
                 Result result = new Result(Equation, answer);
                 Results.Add(result);
                 HistoryIndex += 1;
@@ -163,6 +163,7 @@ namespace BlazorCalc
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 Result result = new Result(Equation, "Invalid equation");
                 Results.Add(result);
                 HistoryIndex += 1;
@@ -175,10 +176,9 @@ namespace BlazorCalc
         public string calculate()
         {
             string equation = String.Format("{0}{1}{2}", Left, Operator, Right);
-            DataTable dt = new DataTable();
-            var v = dt.Compute(equation, "");
-            string answer = String.Format("{0} = {1}", equation, v.ToString());
-            Result result = new Result(Left, Operator, Right, v.ToString());
+            var v = evaluate(equation);
+            string answer = String.Format("{0} = {1}", equation, v);
+            Result result = new Result(Left, Operator, Right, v);
             Results.Add(result);
             HistoryIndex += 1;
             UpdateStepperControls();
@@ -186,6 +186,14 @@ namespace BlazorCalc
             return v.ToString();
         }
 
+        public string evaluate(string expr)
+        {
+            CalcLexer lexer = new CalcLexer(new AntlrInputStream(expr));
+            CalcParser parser = new CalcParser(new CommonTokenStream(lexer));
+            IParseTree tree = parser.start();
+            double answer = new CalcVisitor().Visit(tree);
+            return answer.ToString();
+        }
     }
 
 }
